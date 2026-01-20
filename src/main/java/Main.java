@@ -12,9 +12,9 @@ Add your Lab 1 code to this file
 
 1.5. Prints information to the console / yup
 
-1.6. Writes information to a file
+1.6. Writes information to a file / yup
 
-1.7. Gracefully handles errors using try/catch
+1.7. Gracefully handles errors using try/catch / yup
 
 1.8. Uses a List or array in a meaningful way (perhaps collect multiple user inputs into a List and then iterate over the list to display/store the information)
 
@@ -25,9 +25,20 @@ Add your Lab 1 code to this file
 1.11. Other code comments as appropriate / yup
  */
 
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Scanner; // Needed for input.
+import java.util.Random; // Needed for rand.
 class MainProgram {
+    static Random random_gen = new Random();
+
+    /**
+     * @param the length of the rectangle
+     * @param the width of the rectangle
+     * @return returns a string
+     */
     public static String get_rect_string(int l, int w)
     {
         String s = new String("");
@@ -40,7 +51,7 @@ class MainProgram {
                 }
                 else
                 {
-                    s += x == 0 || x == w-1 ? "X " : "  " ; // i don't like java ternaries
+                    s += x == 0 || x == w-1 ? "X " : "  " ; // i don't like java ternaries :/
                 }
 
             }
@@ -48,24 +59,80 @@ class MainProgram {
         }
         return s;
     }
-    public static void main(String[] args)
+
+    public static int get_int(String m)
     {
-        // add multiple shapes, use array
-        // failsafe this w try/catch
         Scanner input_scanner = new Scanner(System.in);
-        System.out.println("Enter rectangle length: ");
-        int rectangle_length = Integer.parseInt(input_scanner.nextLine());
-        System.out.println("Enter rectangle width: ");
-        int rectangle_width = Integer.parseInt(input_scanner.nextLine());
-        System.out.println(get_rect_string(rectangle_length, rectangle_width));
-        System.out.println("\nYou have also recieved a .txt file copy of your shape in your downloads!");
-        // write this to file
+        while(true)
+        {
+            System.out.println(m);
+            String input = input_scanner.nextLine();
+            try {
+                // System.out.println(input.length());
+                if (input.length() < 3){ // This is to avoid the for loop taking too long.
+                    int return_value = Integer.parseInt(input);
+                    return return_value;
+                }
+                else
+                {
+                    System.out.println("Please enter a # less than 100");
+                    // throw new RuntimeException("Please enter a number less than 100."); // Testing error throwing.
+                }
+
+            } catch (NumberFormatException fail) {
+                System.out.println("ERROR, TRY AGAIN");
+                continue;
+            }
+        }
     }
 
-     /**
-     * @param the length of the rectangle
-     * @param the width of the rectangle
-     * @return returns a string
-     */
+    public static void main(String[] args) {
+        ArrayList<String> shapes_list = new ArrayList<String>();
+
+        System.out.println("Welcome to rectangle list maker, the semi-useless program where you can make a list of rectangles!");
+        boolean mainloop_active = true;
+        while(mainloop_active)
+        {
+            System.out.println(String.format("You're on rectangle #%d", shapes_list.size()+1 ));
+            int rectangle_length = get_int("Enter rectangle length: ");
+            int rectangle_width = get_int("Enter rectangle width: ");
+
+            String new_shape = get_rect_string(rectangle_length, rectangle_width);
+            System.out.println(new_shape);
+            shapes_list.add(new_shape);
+
+            while(true)
+            {
+                Scanner choice_scanner = new Scanner(System.in);
+                System.out.println("\nYou added that rectangle to your list. Do you want to end the program? Type Y/N: ");
+                String choice = choice_scanner.nextLine().toLowerCase();
+                if (choice.equals("y") )
+                {
+                    mainloop_active = false;
+                    break;
+                }
+                else if(choice.equals("n"))
+                {
+                    break;
+                }
+            }
+
+
+        }
+        String final_output = "";
+        for (String shape: shapes_list) {
+            final_output += shape;
+            final_output += "\n";
+        }
+
+        String filepath = String.format("C:\\Users\\25014394\\Desktop\\shape%d.txt", random_gen.nextInt(9999999));
+        // https://www.youtube.com/watch?v=Pg0aoSbrqOE >> Got this from BroCode. I'm surprised it's this easy with Java.
+        try (FileWriter writer = new FileWriter(filepath)) {
+            writer.write(final_output + "\n");
+        } catch (IOException fail) {
+            System.out.println("Failed to write.");
+        }
+        System.out.println(String.format("You have recieved a .txt file copy of all your shapes in your downloads! Filepath is %s.", filepath) );
+    }
 
 }

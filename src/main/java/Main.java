@@ -137,8 +137,10 @@ class MainProgram {
         String filepath;
         // So this works, though technically it can override pre-existing files; bad practice.
         // ChatGPT helped me figure out the importing/checking if file exists. FileWrite can't do that.
-        // sfilepath = String.format("C:\\Users\\25014394\\Desktop\\shape%d.txt", random_gen.nextInt(9999999));
-        filepath = "C:\\Users\\25014394\\Desktop\\shape.txt";
+        // filepath = String.format("C:\\Users\\25014394\\Desktop\\shape%d.txt", random_gen.nextInt(9999999));
+//      filepath = "C:\\Users\\25014394\\Desktop\\shape.txt";
+        filepath = System.getProperty("user.home"); // This is a user safe path, gives the home dir.
+        filepath += "\\shape.txt";
 
         // ChatGPT told me what to import to check if filepaths exist. I then did the classic "add +1 until the path doesn't exist".
         // Path path = Path.of("data/output.txt");

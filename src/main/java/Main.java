@@ -16,7 +16,7 @@ Add your Lab 1 code to this file
 
 1.7. Gracefully handles errors using try/catch / yup
 
-1.8. Uses a List or array in a meaningful way (perhaps collect multiple user inputs into a List and then iterate over the list to display/store the information)
+1.8. Uses a List or array in a meaningful way (perhaps collect multiple user inputs into a List and then iterate over the list to display/store the information) / yup
 
 1.9. A function that accepts at least one argument and returns a value is defined and used NOTE: The ‘main’ function does not count / yup
 

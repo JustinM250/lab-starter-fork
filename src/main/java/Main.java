@@ -26,13 +26,17 @@ Add your Lab 1 code to this file
  */
 
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Scanner; // Needed for input.
 import java.util.Random; // Needed for rand.
+
 class MainProgram {
-    static Random random_gen = new Random();
+    static Random random_gen = new Random(); // Didn't end up using this, good to know tho.
 
     /**
      * @param the length of the rectangle
@@ -60,6 +64,10 @@ class MainProgram {
         return s;
     }
 
+    /**
+     * @param The message to display. Ex: "Enter an integer: "
+     * @return Returns an integer inputted from user
+     */
     public static int get_int(String m)
     {
         Scanner input_scanner = new Scanner(System.in);
@@ -125,14 +133,39 @@ class MainProgram {
             final_output += "\n";
         }
 
-        String filepath = String.format("C:\\Users\\25014394\\Desktop\\shape%d.txt", random_gen.nextInt(9999999));
-        // https://www.youtube.com/watch?v=Pg0aoSbrqOE >> Got this from BroCode. I'm surprised it's this easy with Java.
+
+        String filepath;
+        // So this works, though technically it can override pre-existing files; bad practice.
+        // ChatGPT helped me figure out the importing/checking if file exists. FileWrite can't do that.
+        // sfilepath = String.format("C:\\Users\\25014394\\Desktop\\shape%d.txt", random_gen.nextInt(9999999));
+        filepath = "C:\\Users\\25014394\\Desktop\\shape.txt";
+
+        // ChatGPT told me what to import to check if filepaths exist. I then did the classic "add +1 until the path doesn't exist".
+        // Path path = Path.of("data/output.txt");
+        String og_filepath = filepath;
+        int path_exist_count = 2;
+        while(true){
+            if (Files.exists(Path.of(filepath))){
+                String new_filepath = og_filepath.substring(0,og_filepath.length()-4);
+                new_filepath += Integer.toString(path_exist_count);
+                new_filepath += ".txt";
+                filepath = new_filepath;
+                path_exist_count += 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        // https://www.youtube.com/watch?v=Pg0aoSbrqOE
+        // Got this from BroCode. I'm surprised it's this easy with Java to get a file written out.
         try (FileWriter writer = new FileWriter(filepath)) {
             writer.write(final_output + "\n");
         } catch (IOException fail) {
             System.out.println("Failed to write.");
         }
-        System.out.println(String.format("You have recieved a .txt file copy of all your shapes in your downloads! Filepath is %s.", filepath) );
+        System.out.println(String.format("You have received a .txt file copy of all your shapes in your downloads! Filepath is %s", filepath) );
     }
 
 }

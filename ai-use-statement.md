@@ -1,5 +1,6 @@
 # AI Use Statement
 
-Replace this with your AI use statement (see your lab instructions). 
+https://chatgpt.com/share/696fee4d-ac18-8010-bcd5-17a1e27d8c5c
+This is my conversation. I try sticking to W3Schools and learn through other sites, 
+though I accidentally started a ChatGPT convo, thus I have to include it.
 
-Failure to include an AI use statement may result in a grade deduction of up to 100% on this lab.

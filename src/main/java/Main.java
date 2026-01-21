@@ -65,7 +65,7 @@ class MainProgram {
         }
         return s;
     }
-
+    // text
     /**
      * @param The message to display. Ex: "Enter an integer: "
      * @return Returns an integer inputted from user

@@ -8,11 +8,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+
+//// THE CODE, THOROUGHLY DOCUMENTED
+
 /*
 
-Q4 - Types used in this code:
+Q4 - Types used in this code, and their purpose:
 
-    // TYPES I'm FAMILIAR WITH
+    // TYPES I'M FAMILIAR WITH
 
     Main - The main program.
         Belongs to java.lang
@@ -37,7 +40,7 @@ Q4 - Types used in this code:
 
     // TYPES I'M UNFAMILIAR WITH
 
-    InputStream - The input stream used for the showAvatar method. Here we're using a method to get a random avatar stream, from the dicebear.com API, and a method to show it, taking the InputStream instance as a param.
+    InputStream - Here we're using a method to get a random avatar stream (for converting to an image), from the dicebear.com API, and a method to show it, taking the InputStream instance as a param.
         Belongs to import java.io.InputStream
 
     URI - "Represents a Uniform Resource Identifier (URI) reference." Here we use it to create an HTTP request, to connect to dicebear.com, to use their API.
@@ -52,7 +55,7 @@ Q4 - Types used in this code:
     HttpResponse - The HTTP Response
         Belongs to java.net.http.HttpResponse
 
-    BodyHandlers - Class within the HttpResponse class. We use this to get the InputStream of the response, which is the avatar.
+    BodyHandlers - Class within the HttpResponse class. We use the ofInputStream() method to get the InputStream of the response, which is the avatar.
         Belongs to java.net.http.HttpResponse
 
     ImageIO - Here we use the InputStream to feed into ImageIO.read() to return a BufferedImage object, which is used as the value of our Image.
@@ -64,7 +67,7 @@ Q4 - Types used in this code:
     JFrame - To my understanding, this is used to create a window, which is then used for displaying content.
         Belongs to javax.imageio.ImageIO, also needs javax.swing.*.
 
-    ImageIcon - We create an ImageIcon for use in a JLabel, converting from an Image.
+    ImageIcon - From the Image we create an ImageIcon for use in a JLabel.
         Belongs to import javax.swing.*
 
     JLabel - We're displaying the image using a JLabel containing an ImageIcon.
@@ -129,7 +132,7 @@ class Main{
         // Create an HTTP request for a random avatar
         var uri = URI.create("https://api.dicebear.com/9.x/%s/png?seed=%d".formatted(style, seed));
         //// Q1+Q2: After URI: class method, URI, returns a new URI for the creation of the HTTP request.
-        //// Q1+Q2: After the String: instance method, returns the String but formatted. %d is for decimal, %s is for string.
+        //// Q1+Q2: After the String: instance method, returns the String but formatted. %d is for decimal, %s is for string. The link is an API call like what we did last semester with the OMDB.
         //// Q6: URI. Object/Reference type.
         var request = HttpRequest.newBuilder(uri).build();
         //// Q1+Q2: After HttpRequest: class method, HttpRequest.Builder, returns a new HttpRequest.Builder. Builder is an interface in HttpRequest.
@@ -199,7 +202,7 @@ class Main{
         }
 
         frame.setVisible(true);
-        //// Q1: After frame: instance method, void, sets the visibility.
+        //// Q1: After frame: instance method, void, sets the visibility. I'm assuming it's invisible by default.
     }
 
 }

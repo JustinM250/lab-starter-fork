@@ -8,6 +8,6 @@
  */
 package core;
 
-public class HighCardGame {
+public class War {
 
 }

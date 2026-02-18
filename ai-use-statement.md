@@ -1,4 +1,4 @@
 # AI Use Statement
 
-Replace this with your AI Use Statement, which is required **WHETHER OR NOT** you used AI.
-Failure to include this statement will result in a reduced grade of up to 100%.
+I didn't use AI for the actual coding, though I used it to (attempt to) figure out the IDE issues. As of Feb 18th I can use VC. 
+https://chatgpt.com/share/6995fa9d-ec78-8010-a815-e00bdbd8d480

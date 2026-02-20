@@ -28,7 +28,8 @@ class Main {
                 if (game.isValidPosition(pos)) {
                     break;
                 }
-                Console.printAlert("That position is not valid. Please enter a valid position.");
+//              Console.printAlert("That position is not valid. Please enter a valid position.");
+                Console.printColoredAlert("That position is not valid. Please enter a valid position.", Console.redFg, Console.blackBg);
             }
 
             Console.println("%s plays %s at %s %s".formatted(player.name(), player.token(), pos.row(), pos.col()));

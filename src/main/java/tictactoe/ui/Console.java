@@ -3,14 +3,23 @@ package tictactoe.ui;
 import java.text.ParseException;
 import java.util.Scanner;
 
+import com.diogonunes.jcolor.Attribute;
 import tictactoe.game.Board;
 import tictactoe.game.Position;
+
+import static com.diogonunes.jcolor.Ansi.colorize;
+import static com.diogonunes.jcolor.Attribute.*;
 
 /**
  * Helper methods for doing console-based user interaction
  */
 public class Console {
 
+    public static Attribute redFg = RED_TEXT();
+    public static Attribute yellowFg = RED_TEXT();
+    public static Attribute blueBg = BLUE_TEXT();
+    public static Attribute greenFg = GREEN_TEXT();
+    public static Attribute blackBg = BLACK_BACK();
 
     public static void println(String message) {
         IO.println(message);
@@ -37,6 +46,16 @@ public class Console {
     }
 
     /**
+     * Display an alert message to the user, now colored!!!
+     * @param m The message to display
+     * @param fg The foreground color
+     * @param bg The background color
+     */
+    public static void printColoredAlert(String m, Attribute fg, Attribute bg) {
+        IO.println(colorize(m, fg, bg));
+    }
+
+    /**
      * Repeatedly prompt the user for a position on which to place their next token.
      * If they enter an invalid response or an already-taken position they are re-prompted.
      * @param prompt The prompt to display to the user
@@ -56,13 +75,14 @@ public class Console {
                 var pos = Position.parse(input);
 
                 if (! board.isEmptyAt(pos)) {
-                    printAlert("That position is already taken.");
+//                  printAlert("That position is already taken.");
+                    printColoredAlert("That position is already taken.", redFg, blackBg);
                     continue;
                 }
 
                 return pos;
             } catch ( ParseException e ) {
-                printAlert(helpMessage);
+                printColoredAlert(helpMessage, yellowFg, blackBg);
             }
         }
     }

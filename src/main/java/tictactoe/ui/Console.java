@@ -15,10 +15,12 @@ import static com.diogonunes.jcolor.Attribute.*;
  */
 public class Console {
 
+    public static Attribute whiteFg = WHITE_TEXT();
     public static Attribute redFg = RED_TEXT();
-    public static Attribute yellowFg = RED_TEXT();
+    public static Attribute yellowFg = YELLOW_TEXT();
     public static Attribute blueBg = BLUE_TEXT();
     public static Attribute greenFg = GREEN_TEXT();
+    public static Attribute purpleFg = BRIGHT_MAGENTA_TEXT();
     public static Attribute blackBg = BLACK_BACK();
 
     public static void println(String message) {
@@ -36,6 +38,20 @@ public class Console {
         var scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
+
+     /**
+     * Prompt the user for an input, now with colored text!!!
+     * @param m The message to prompt the user with
+     * @param fg The foreground color
+     * @param bg The background color
+     * @return The user's response
+     */
+    public static String promptColored(String m, Attribute fg, Attribute bg) {
+        printColoredAlert(m, fg, bg);
+        var scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
 
     /**
      * Display an alert message to the user

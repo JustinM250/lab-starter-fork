@@ -7,6 +7,7 @@ import java.text.ParseException;
  * @param row
  * @param col
  */
+
 public record Position(Row row, Col col) {
 
     /**

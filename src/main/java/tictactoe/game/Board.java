@@ -105,7 +105,8 @@ public class Board {
         if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             return Optional.of(board[0][0]);
         }
-        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[1][0]) {
+//        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[1][0]) { // THE BUG (i think)
+        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             return Optional.of(board[0][2]);
         }
         return Optional.empty();

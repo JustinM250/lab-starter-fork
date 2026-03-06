@@ -19,12 +19,12 @@ class Main {
 
             var turnData = game.doNextTurn();
 
-            Console.println("%s plays %s at %s %s".formatted(turnData.whoseTurn().name(), turnData.whoseTurn().token(), turnData.positionPlayed().row(), turnData.positionPlayed().col()));
+            Console.println("%s plays %s at %s %s".formatted(turnData.whoseTurn().name, turnData.whoseTurn().token, turnData.positionPlayed().row(), turnData.positionPlayed().col()));
             Console.showBoard(turnData.newBoardState());
 
             switch (game.getStatus()) {
                 case Draw -> Console.println("It's a draw!");
-                case XWins, OWins -> Console.println("%s wins!".formatted(turnData.whoseTurn().name()));
+                case XWins, OWins -> Console.println("%s wins!".formatted(turnData.whoseTurn().name));
             }
 
         }

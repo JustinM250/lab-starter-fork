@@ -3,6 +3,7 @@ package tictactoe.ui;
 import tictactoe.game.*;
 import com.diogonunes.jcolor.AnsiFormat;
 import tictactoe.game.player.Player;
+import tictactoe.game.player.HumanPlayer;
 
 import java.text.ParseException;
 
@@ -79,7 +80,7 @@ public class Console {
                     default -> printAlert(helpMessage);
                 }
             } else {
-                return new Player(input, whichPlayer);
+                return new HumanPlayer(input, whichPlayer);
             }
         }
     }

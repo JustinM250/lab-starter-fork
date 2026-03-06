@@ -66,7 +66,7 @@ public class TicTacToeGame {
      * @param pos The position to place the token at
      */
     private void placeTokenAt(Position pos) {
-        board.place(pos, whoseTurn.token());
+        board.place(pos, whoseTurn.token);
 
         // If the game is still in progress, switch turns
         // (If there's a winner, we DON'T want to switch turns so that 'whoseTurn' still reflects the previous

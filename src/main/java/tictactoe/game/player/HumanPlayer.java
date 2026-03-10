@@ -26,7 +26,7 @@ public class HumanPlayer extends Player {
     }
 
     // 2.4. Create the necessary constructor method to allow a HumanPlayer with a specific name and token to be created.
-    // (You will need to use the ‘super’ keyword.) <<< ????
+    // (You will need to use the ‘super’ keyword.) <<< Didn't end up using 'super'.
     public HumanPlayer(String name, Token token){
         this.name = name;
         this.token = token;

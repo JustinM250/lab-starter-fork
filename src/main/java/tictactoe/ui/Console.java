@@ -2,6 +2,7 @@ package tictactoe.ui;
 
 import tictactoe.game.*;
 import com.diogonunes.jcolor.AnsiFormat;
+import tictactoe.game.player.Optimus;
 import tictactoe.game.player.Player;
 import tictactoe.game.player.HumanPlayer;
 import tictactoe.game.player.Linus;
@@ -78,6 +79,7 @@ public class Console {
 
                 switch ( input ) {
                     case "linus": return new Linus(input, whichPlayer);
+                    case "optimus": return new Optimus(input, whichPlayer);
 //                    default -> printAlert(helpMessage);
                     default: printAlert(helpMessage);
                 }

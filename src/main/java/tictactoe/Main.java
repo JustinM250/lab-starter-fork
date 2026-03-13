@@ -10,7 +10,7 @@ import static tictactoe.game.TicTacToeGame.Status.*;
 class Main {
     static void main() {
 
-        Console.println("Welcome to Tic Tac Toe!\nWhen asked 'who will play #?', enter the name '@Linus' or '@Optimus' to assume a computer player.\n- Linus is a player who picks the first availible slot.\n- Optimus? Well, you can't beat Optiumus. ");
+        Console.println("Welcome to Tic Tac Toe!\nWhen asked 'who will play #?', enter the name '@Linus' or '@Optimus' to assume a computer player.\n- Linus is a player who picks the first available slot.\n- Optimus? Well, you can't beat Optimus. ");
         var playerX = Console.promptForPlayer(Token.X);
         var playerO = Console.promptForPlayer(Token.O);
         var game = new TicTacToeGame(playerX, playerO);

@@ -20,10 +20,10 @@ class LinusTest {
         };
 
         Board[] expectedBoards = {
-                new Board("OX.\n...\n..."),
-                new Board("OOX\n...\n..."),
-                new Board("O.X\n.X.\n..."),
-                new Board("OXX\nOXO\nOXX"),
+            new Board("OX.\n...\n..."),
+            new Board("OOX\n...\n..."),
+            new Board("O.X\n.X.\n..."),
+            new Board("OXX\nOXO\nOXX"),
         };
 
         Linus linus = new Linus("Linus", Token.O);

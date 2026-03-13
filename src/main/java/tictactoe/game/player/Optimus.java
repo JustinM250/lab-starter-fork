@@ -59,8 +59,10 @@ public class Optimus extends Player {
 
         if (emptyCount == 9){
             Random r = new Random();
-            int randX = r.nextInt(4);
-            int randY = r.nextInt(4);
+            int randX = r.nextInt(3) + 1;
+            int randY = r.nextInt(3) + 1;
+            Console.println(randX + " ");
+            Console.println(randY + " ");
             try{
                 chosenPos = Position.parse( String.valueOf(randX) + String.valueOf(randY) );
             }
@@ -79,55 +81,113 @@ public class Optimus extends Player {
 
     }
 
-//    public record Minimax(int score, Position p, Board b, Player player ){
+
+
     public record Minimax(int score, Position p ){
 
+        /**
+         * @param b this is the current board.
+         * @param tok this is the calling player's token.
+         * Call this method to get a Minimax record. That record will contain the winning score and the best position. The winning score will likely be useless, so access .p on the returned record to get the position.
+         * */
         static Minimax run(Board b, Token tok){
-            Console.println("RUNNING RECURSION");
-            int worstScore = 0;
-            if (tok.equals(Token.X)){
-                worstScore = -1;
-            }
-            else{
-                worstScore = 1;
-            }
+//            Console.println("RUNNING RECURSION");
+
+            // PRE-AI
+//            int worstScore = 0;
+//            if (tok.equals(Token.X)){
+//                worstScore = -1;
+//            }
+//            else{
+//                worstScore = 1;
+//            }
+            //
+
+
+            // AI
+            int worstScore = (tok == Token.X) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            //
+
             Minimax worstCase = new Minimax(worstScore, null);
             return recursive_call( worstCase, worstScore, b, tok );
         }
 
         static Minimax recursive_call( Minimax best, int current_score, Board b, Token t   ){
-
-            Console.println("CALL");
-            if ( !b.getWinner().equals(Optional.empty()) )
+//            Console.println("CALL");
+            if ( b.getWinner().isPresent() )
             {
-                Console.println("WE HAVE A WINNER");
-                if ( b.getWinner().equals(t) )
-                {
+//                Console.println("WE HAVE A WINNER");
+                // PRE-AI
+//                if ( b.getWinner().get() == t )
+////                if (b.getWinner().equals(Optional.of(t)) )
+//                {
+//                    return new Minimax(1, null);
+//                }
+//                else
+//                {
+//                    return new Minimax(-1, null);
+//                }
+                //
+
+                // AI
+                //Token prev = (t == Token.X ? Token.O : Token.X); // This line was unecessary;
+                if (b.getWinner().get() == Token.X) {  // don't compare previous, compare X.
                     return new Minimax(1, null);
-                }
-                else
-                {
+                } else {
                     return new Minimax(-1, null);
                 }
+                //
+
             }
             else if (b.isFull() ){
-                Console.println("WE HAVE A DRAW");
+//                Console.println("WE HAVE A DRAW");
                 return new Minimax(0, null);
             }
             else{
+                // AI
+                best = (t == Token.X)
+                        ? new Minimax(Integer.MIN_VALUE, null)
+                        : new Minimax(Integer.MAX_VALUE, null);
+                //
+
                 for (Position p : b.getEmptyCells() ){
                     Board copiedBoard = new Board(b);
-                    // There is no board.placeNextToken method (?)
                     copiedBoard.place(p, t);
-                    Minimax m = recursive_call(best, current_score, copiedBoard, t);
 
-                    if (current_score > best.score ){
-                        best = new Minimax(current_score, p);
+                    Token nextToken = (t == Token.X ? Token.O : Token.X);
+                    Minimax m = recursive_call(best, current_score, copiedBoard, nextToken);
+
+
+                    // PRE-AI
+//                    if (nextToken == Token.X ){
+//                        if (current_score > best.score ){
+//                            best = new Minimax(current_score, p);
+//                        }
+//                    }
+//                    else{
+//                        if (current_score < best.score ){
+//                            best = new Minimax(current_score, p);
+//                        }
+//                    }
+                    //
+
+                    // AI
+                    if (best.p == null) {
+                        best = new Minimax(m.score, p);
                     }
+                    if (t == Token.X) { // maximizing
+                        if (m.score > best.score) {
+                            best = new Minimax(m.score, p);
+                        }
+                    } else { // minimizing
+                        if (m.score < best.score) {
+                            best = new Minimax(m.score, p);
+                        }
+                    }
+                    //
+
                 }
             }
-
-
             return best;
         }
     }

@@ -21,11 +21,19 @@
             <version>6.0.1</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.diogonunes/JColor -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.diogonunes/JColor &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.diogonunes</groupId>-->
+<!--            <artifactId>JColor</artifactId>-->
+<!--            <version>5.5.1</version>-->
+<!--        </dependency>-->
+
+        <!-- Source: https://mvnrepository.com/artifact/com.diogonunes/JColor -->
         <dependency>
             <groupId>com.diogonunes</groupId>
             <artifactId>JColor</artifactId>
             <version>5.5.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

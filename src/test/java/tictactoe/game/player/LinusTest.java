@@ -11,19 +11,62 @@ import tictactoe.ui.Console;
 class LinusTest {
 
     @Test
-    void testGetNextMove(){
-//        Linus linus = new Linus("Linus", Token.O);
-//        Board b = new Board("X..\n...\n...");
-//        b.place(linus.getNextMove(b), linus.token );
-//        Console.println( b.toString() );
-//        assertTrue( b.equals( new Board("XO.\n...\n...") ) );
+    void testGetNextMoveO(){
+        Board[] boards = {
+            new Board(".X.\n...\n..."),
+            new Board(".OX\n...\n..."),
+            new Board("..X\n.X.\n..."),
+            new Board("OXX\nOXO\n.XX"),
+        };
+
+        Board[] expectedBoards = {
+                new Board("OX.\n...\n..."),
+                new Board("OOX\n...\n..."),
+                new Board("O.X\n.X.\n..."),
+                new Board("OXX\nOXO\nOXX"),
+        };
 
         Linus linus = new Linus("Linus", Token.O);
-        Board b = new Board(".X.\n...\n...");
-        Console.println( b.toString() );
-        b.place(linus.getNextMove(b), linus.token );
-        Console.println( b.toString() );
-        assertTrue( b.equals( new Board("OX.\n...\n...") ) );
 
+        int count = 0;
+        for (Board b : boards){
+            Console.println(count + " --------------------\n" );
+            Console.println( b.toString() );
+            b.place(linus.getNextMove(b), linus.token );
+            Console.println( b.toString() );
+            assertTrue( b.equals( expectedBoards[count] ) );
+            count += 1;
+        }
     }
+
+    @Test
+    void testGetNextMoveX(){
+        Board[] boards = {
+                new Board(".X.\n...\n..."),
+                new Board(".OX\n...\n..."),
+                new Board("..X\n.X.\n..."),
+                new Board("OXX\nOXO\n.XX"),
+        };
+
+        Board[] expectedBoards = {
+                new Board("XX.\n...\n..."),
+                new Board("XOX\n...\n..."),
+                new Board("X.X\n.X.\n..."),
+                new Board("OXX\nOXO\nXXX"),
+        };
+
+        Linus linus = new Linus("Linus", Token.X);
+
+        int count = 0;
+        for (Board b : boards){
+            Console.println(count + " --------------------\n" );
+            Console.println( b.toString() );
+            b.place(linus.getNextMove(b), linus.token );
+            Console.println( b.toString() );
+            assertTrue( b.equals( expectedBoards[count] ) );
+            count += 1;
+        }
+    }
+
+
 }

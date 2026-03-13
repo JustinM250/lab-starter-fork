@@ -83,12 +83,16 @@ public class Optimus extends Player {
     public record Minimax(int score, Position p ){
 
         static Minimax run(Board b, Token tok){
-
             Console.println("RUNNING RECURSION");
-            Minimax worstCase = new Minimax(-1, null);
-            return recursive_call( worstCase, -1, b, tok );
-
-//            return new Minimax(1, bestResult);
+            int worstScore = 0;
+            if (tok.equals(Token.X)){
+                worstScore = -1;
+            }
+            else{
+                worstScore = 1;
+            }
+            Minimax worstCase = new Minimax(worstScore, null);
+            return recursive_call( worstCase, worstScore, b, tok );
         }
 
         static Minimax recursive_call( Minimax best, int current_score, Board b, Token t   ){

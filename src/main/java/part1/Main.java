@@ -6,7 +6,7 @@ import part1.util.Messages;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -16,31 +16,27 @@ public class Main {
 
         try {
 
-            /* === Easy loggers === */
-            // TODO: Implementnt AT LEAST one of these
-//            Logger logger = new ColorLogger();
-//            Logger logger = new InDenialLogger();
-            Logger logger = new LoudLogger();
+            // IMPLEMENTED LoudLogger
+//            Logger loudLoggerTest = new LoudLogger();
 
-            /* === Medium loggers === */
-            // TODO: Implement at least one of these
-//            Logger logger = new CensoriousLogger(List.of("hungrish", "drabblex", "clorphed", "snorvish", "grumblet", "flonky", "blarfish"));
-//            Logger logger = new MultiLogger(List.of(new ConsoleLogger(), new StreamLogger(new FileOutputStream("log.txt"))));
-//            Logger logger = new StreamLogger(System.out);                      // Using System.out as the destination
-//            Logger logger = new StreamLogger(new FileOutputStream("log.txt")); // Using a file as the destination
+            // IMPLEMENTED MultiLogger
+            // In this case we have 3 different loggers. The for loop below would execute 50 times, passing in that message to each of the 3.
+//            ArrayList<Logger> someLoggers = new ArrayList<Logger>();
+//            someLoggers.add(new LoudLogger());
+//            someLoggers.add(new LoudLogger());
+//            someLoggers.add(new ConsoleLogger() );
+//            Logger multiLoggerTest = new MultiLogger(someLoggers );
 
-            // TODO: Implement MemoryLogger
-//            MemoryLogger logger = new MemoryLogger();
+            // IMPLEMENTED MemoryLogger
 
-            // TODO: (Optional) Implement a JDBC logger
-//            Logger logger = new JdbcLogger("jdbc:sqlite:log.db");
+            MemoryLogger memoryLoggerTest = new MemoryLogger();
 
-            // TODO: you can change the first argument here to one of the loggers above,
-            //       or to a different constructor call based on the examples above.
-            run(new LoudLogger(), 50);
+            // PASS IN LOGGER.
+            run(memoryLoggerTest, 50);
+//            memoryLoggertest.storedMessagesPrintAll();
 
-            // TODO: uncomment this while you are trying out your MemoryLogger
-            // export(logger, new FileOutputStream("logs.txt"));  // OR try System.out as the second parameter!
+            // Uncomment this while you are trying out your MemoryLogger
+             export(memoryLoggerTest, new FileOutputStream("logs.txt"));
 
         } catch (Exception e) {
             IO.println("Could not create log file: " + e.getMessage());

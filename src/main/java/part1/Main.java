@@ -20,7 +20,7 @@ public class Main {
             // TODO: Implementnt AT LEAST one of these
 //            Logger logger = new ColorLogger();
 //            Logger logger = new InDenialLogger();
-//            Logger logger = new LoudLogger();
+            Logger logger = new LoudLogger();
 
             /* === Medium loggers === */
             // TODO: Implement at least one of these
@@ -37,7 +37,7 @@ public class Main {
 
             // TODO: you can change the first argument here to one of the loggers above,
             //       or to a different constructor call based on the examples above.
-            run(new ConsoleLogger(), 50);
+            run(new LoudLogger(), 50);
 
             // TODO: uncomment this while you are trying out your MemoryLogger
             // export(logger, new FileOutputStream("logs.txt"));  // OR try System.out as the second parameter!
@@ -48,7 +48,7 @@ public class Main {
         }
     }
 
-    public static void run(ConsoleLogger logger, int n) {
+    public static void run(Logger logger, int n) {
         for ( int i = 0; i < n; i++ ) {
             var randomLevel = LogLevel.values()[(int) (Math.random() * LogLevel.values().length)];
             var message = Messages.getRandomMessage();

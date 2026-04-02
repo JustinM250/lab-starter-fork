@@ -42,34 +42,44 @@ public class JavaFx extends Application{
     int lScore = 0;
     int rScore = 0;
 
+    int ballColorInc = 0;
+
     @Override
     public void start(Stage r){
 //        Rectangle[] paddles = {};
         double viewportW = 1920.0;
         double viewportH = 1080.0;
 
+        double ballR = 15.0;
         double paddleW = 10.0;
         double paddleH = 180.0;
         double distFromSide = 30.0;
         Rectangle lPaddle = new Rectangle(0.0 + distFromSide, (viewportH/2), paddleW, paddleH);
         Rectangle rPaddle = new Rectangle(viewportW - distFromSide - paddleW, (viewportH/2), paddleW, paddleH);
-        Circle ball = new Circle(20.0);
+        Circle ball = new Circle(ballR);
         ball.setTranslateX(viewportW/2);
         ball.setTranslateY(viewportH/2);
-        lPaddle.setFill(Color.RED);
-        rPaddle.setFill(Color.BLUE);
-        ball.setFill(Color.BLACK);
+        lPaddle.setFill(Color.WHITE);
+        rPaddle.setFill(Color.WHITE);
         Label scoreLabel = new Label("0-0");
         scoreLabel.setScaleX(12.0);
         scoreLabel.setScaleY(12.0);
         scoreLabel.setTranslateX(viewportW/2 );
         scoreLabel.setTranslateY(140.0);
 
-        Group mainGroup = new Group(lPaddle, rPaddle, ball, scoreLabel);
+        double warningH = viewportH;
+        double warningW = 10.0;
+        Rectangle lWarning = new Rectangle(0.0, 0.0, warningW, warningH);
+        Rectangle rWarning = new Rectangle(viewportW-warningW, 0.0, warningW, warningH);
+        lWarning.setFill(Color.RED);
+        rWarning.setFill(Color.RED);
+
+        Group mainGroup = new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning);
+
 
         r.setTitle("PONG+");
-
         Scene scene = new Scene(mainGroup, viewportW, viewportH);
+        scene.setFill(Color.BLACK);
 
         scene.setOnKeyPressed(e -> {
             double moveIncY = 50.0;
@@ -122,25 +132,29 @@ public class JavaFx extends Application{
                     ballDirX = -1;
                 }
 
-                if (ballDirX != ballDirXBefore || ballDirY != ballDirYBefore ){
-                    ballSpeed += 0.4;
-                }
+                if (ballDirX != ballDirXBefore || ballDirY != ballDirYBefore ){ ballSpeed += 0.9;}
 
                 // SCORING
-                boolean scoreHad = false;
+                boolean scoreAchieved = false;
                 if (ball.getTranslateX() < 0.0 ){
                     setScore(lScore,rScore+1,scoreLabel);
-                    scoreHad = true;
+                    scoreAchieved = true;
                 }
                 else if (ball.getTranslateX() > viewportW ){
                     setScore(lScore+1,rScore,scoreLabel);
-                    scoreHad = true;
+                    scoreAchieved = true;
                 }
-                if (scoreHad){
+                if (scoreAchieved){
                     ball.setTranslateX(viewportW/2);
                     ball.setTranslateY(viewportH/2);
                     ballSpeed = ballSpeedDefault;
                 }
+
+                ballColorInc += 1;
+                if (ballColorInc % 6 == 0){
+                    ball.setFill( ball.getFill() == Color.WHITE ? Color.GREY : Color.WHITE );
+                }
+
             })
         );
         everySecond.setCycleCount(Animation.INDEFINITE);

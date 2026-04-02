@@ -1,4 +1,4 @@
-package main_P;
+package main_package;
 
 import javafx.application.Application;
 import ui.JavaFx;
@@ -6,8 +6,7 @@ import ui.JavaFx;
 public class Main {
     static void main() {
         // 12:46, Starting
-        IO.println("TODO: make a JavaFX app");
-
+        IO.println("Launching Pong+ !!!");
         Application.launch(JavaFx.class);//JavaFx.class);
 
         /*

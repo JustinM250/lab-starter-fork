@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Warning extends Rectangle {
@@ -8,7 +9,7 @@ public class Warning extends Rectangle {
 
     public Warning(double posX, double posY ){
         super(posX, posY, W, H);
-
+        setFill(Color.RED);
 
     }
 }

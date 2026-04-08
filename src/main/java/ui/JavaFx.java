@@ -47,8 +47,8 @@ public class JavaFx extends Application{
     double viewportW = 1920.0;
     double viewportH = 1080.0;
 
-    double warningW = 10.0;
-    double warningH = viewportH;
+//    double warningW = 10.0;
+//    double warningH = viewportH;
 
     double ballR = 15.0;
     double paddleW = 10.0;
@@ -87,8 +87,6 @@ public class JavaFx extends Application{
         scene.setFill(Color.BLACK);
         lPaddle.setFill(Color.WHITE);
         rPaddle.setFill(Color.WHITE);
-        lWarning.setFill(Color.RED);
-        rWarning.setFill(Color.RED);
 
         scene.setOnKeyPressed(e -> {
             inputCode(e, lPaddle, rPaddle);

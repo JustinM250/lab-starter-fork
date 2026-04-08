@@ -47,6 +47,9 @@ public class JavaFx extends Application{
     double viewportW = 1920.0;
     double viewportH = 1080.0;
 
+    double warningW = 10.0;
+    double warningH = viewportH;
+
     double ballR = 15.0;
     double paddleW = 10.0;
     double paddleH = 180.0;
@@ -72,15 +75,15 @@ public class JavaFx extends Application{
         scoreLabel.setTranslateY(140.0);
 
         // CREATING THE WARNING VISUALS
-        double warningH = viewportH;
-        double warningW = 10.0;
-        Rectangle lWarning = new Rectangle(0.0, 0.0, warningW, warningH);
-        Rectangle rWarning = new Rectangle(viewportW-warningW, 0.0, warningW, warningH);
+//        Rectangle lWarning = new Rectangle(0.0, 0.0, warningW, warningH);
+//        Rectangle rWarning = new Rectangle(viewportW-warningW, 0.0, warningW, warningH);
+        Warning lWarning = new Warning(0.0, 0.0);
+        Warning rWarning = new Warning(viewportW-Warning.W, 0.0);
 
         // Group mainGroup = new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning);
         Scene scene = new Scene(new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning), viewportW, viewportH);
 
-        // SETTING FILLS
+        // SETTING SHAPE FILLS
         scene.setFill(Color.BLACK);
         lPaddle.setFill(Color.WHITE);
         rPaddle.setFill(Color.WHITE);
@@ -119,10 +122,12 @@ public class JavaFx extends Application{
                 }
 
                 // Check if the ball's translate X goes past the paddle's X, AND if the ball's translate Y is within paddle's 'hitbox'.
-                if ( (ball.getTranslateX() < lPaddle.getX() + paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), lPaddleYPos, lPaddleYPos + paddleH)) ){
+//                if ( (ball.getTranslateX() < lPaddle.getX() + paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), lPaddleYPos, lPaddleYPos + paddleH)) ){
+                if ( (ball.getTranslateX() < lPaddle.getX() + paddleW) && (UsefulMath.doubleInRange(ballYPos, lPaddleYPos, lPaddleYPos + paddleH)) ){
                     ballDirX = 1;
                 }
-                else if ( (ball.getTranslateX() > rPaddle.getX() - paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), rPaddleYPos, rPaddleYPos + paddleH )) ){
+//                else if ( (ball.getTranslateX() > rPaddle.getX() - paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), rPaddleYPos, rPaddleYPos + paddleH )) ){
+                else if ( (ball.getTranslateX() > rPaddle.getX() - paddleW) && (UsefulMath.doubleInRange(ballYPos, rPaddleYPos, rPaddleYPos + paddleH )) ){
                     ballDirX = -1;
                 }
 

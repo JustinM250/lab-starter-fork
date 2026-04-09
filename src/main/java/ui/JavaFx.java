@@ -1,18 +1,5 @@
 package ui;
 
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
-import javafx.animation.ScaleTransition;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.input.KeyCodeCombination;
-import javax.sound.midi.ControllerEventListener;
-import java.sql.Time;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.animation.Animation;
@@ -22,8 +9,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
@@ -31,62 +16,32 @@ import javafx.scene.Group;
 
 import java.awt.*;
 
-import ui.FileOutputter;
-import ui.UsefulMath;
-
 public class JavaFx extends Application{
-
-    int ballDirX = 1;
-    int ballDirY = 1;
-    double ballSpeedDefault = 5.0;
-    double ballSpeed = ballSpeedDefault;
-
     int lScore = 0;
     int rScore = 0;
 
-    double viewportW = 1920.0;
-    double viewportH = 1080.0;
-
-//    double warningW = 10.0;
-//    double warningH = viewportH;
-
-    double ballR = 15.0;
-    double paddleW = 10.0;
-    double paddleH = 180.0;
     double distFromSide = 30.0;
-
-    int ballColorInc = 0;
 
     @Override
     public void start(Stage r){
         r.setTitle("PONG+");
-        // CREATING THE PADDLES AND THE BALL
-        Rectangle lPaddle = new Rectangle(0.0 + distFromSide, (viewportH/2), paddleW, paddleH);
-        Rectangle rPaddle = new Rectangle(viewportW - distFromSide - paddleW, (viewportH/2), paddleW, paddleH);
-        Circle ball = new Circle(ballR);
-        ball.setTranslateX(viewportW/2);
-        ball.setTranslateY(viewportH/2);
+        Paddle lPaddle = new Paddle(0.0 + distFromSide, (ViewportInfo.H/2) );
+        Paddle rPaddle = new Paddle(ViewportInfo.W - distFromSide - Paddle.W, (ViewportInfo.H/2) );
+        Ball ball = new Ball(15.0);
+        ball.reset();
 
-        // CREATING THE SCORE LABEL
         Label scoreLabel = new Label("0-0");
         scoreLabel.setScaleX(12.0);
         scoreLabel.setScaleY(12.0);
-        scoreLabel.setTranslateX(viewportW/2 );
+        scoreLabel.setTranslateX(ViewportInfo.W/2 );
         scoreLabel.setTranslateY(140.0);
 
-        // CREATING THE WARNING VISUALS
-//        Rectangle lWarning = new Rectangle(0.0, 0.0, warningW, warningH);
-//        Rectangle rWarning = new Rectangle(viewportW-warningW, 0.0, warningW, warningH);
         Warning lWarning = new Warning(0.0, 0.0);
-        Warning rWarning = new Warning(viewportW-Warning.W, 0.0);
+        Warning rWarning = new Warning(ViewportInfo.W-Warning.W, 0.0);
 
         // Group mainGroup = new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning);
-        Scene scene = new Scene(new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning), viewportW, viewportH);
-
-        // SETTING SHAPE FILLS
+        Scene scene = new Scene(new Group(lPaddle, rPaddle, ball, scoreLabel, lWarning, rWarning), ViewportInfo.W, ViewportInfo.H);
         scene.setFill(Color.BLACK);
-        lPaddle.setFill(Color.WHITE);
-        rPaddle.setFill(Color.WHITE);
 
         scene.setOnKeyPressed(e -> {
             inputCode(e, lPaddle, rPaddle);
@@ -104,54 +59,48 @@ public class JavaFx extends Application{
                     So if it's at 540 and hasn't been moved, the translate value will be 0.
                     If it's been moved 200 down, the "position" we want is 740, but the translate is still 200.
                 */
-                double lPaddleYPos = UsefulMath.lerp(viewportH, 0.0, (lPaddle.getY() - lPaddle.getTranslateY()) / viewportH )  ;
-                double rPaddleYPos = UsefulMath.lerp(viewportH, 0.0, (rPaddle.getY() - rPaddle.getTranslateY()) / viewportH )  ;
+                double lPaddleYPos = UsefulMath.lerp(ViewportInfo.H, 0.0, (lPaddle.getY() - lPaddle.getTranslateY()) / ViewportInfo.H )  ;
+                double rPaddleYPos = UsefulMath.lerp(ViewportInfo.H, 0.0, (rPaddle.getY() - rPaddle.getTranslateY()) / ViewportInfo.H )  ;
                 double ballYPos = ball.getTranslateY();
 
-                int ballDirXBefore = ballDirX;
-                int ballDirYBefore = ballDirY;
+                int ballDirXBefore = ball.dirX;
+                int ballDirYBefore = ball.dirY;
 
-                moveShape(ball, (ballSpeed * ballDirX), (ballSpeed * ballDirY) );
-                if (ball.getTranslateY() > viewportH ){
-                    ballDirY = -1;
+                moveShape(ball, (ball.speed * ball.dirX), (ball.speed * ball.dirY) );
+                if (ball.getTranslateY() > ViewportInfo.H ){
+                    ball.dirY = -1;
                 }
                 else if (ball.getTranslateY() < 0.0 ){
-                    ballDirY = 1;
+                    ball.dirY = 1;
                 }
 
                 // Check if the ball's translate X goes past the paddle's X, AND if the ball's translate Y is within paddle's 'hitbox'.
 //                if ( (ball.getTranslateX() < lPaddle.getX() + paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), lPaddleYPos, lPaddleYPos + paddleH)) ){
-                if ( (ball.getTranslateX() < lPaddle.getX() + paddleW) && (UsefulMath.doubleInRange(ballYPos, lPaddleYPos, lPaddleYPos + paddleH)) ){
-                    ballDirX = 1;
+                if ( (ball.getTranslateX() < lPaddle.getX() + Paddle.W) && (UsefulMath.doubleInRange(ballYPos, lPaddleYPos, lPaddleYPos + Paddle.H)) ){
+                    ball.dirX = 1;
                 }
 //                else if ( (ball.getTranslateX() > rPaddle.getX() - paddleW) && (UsefulMath.doubleInRange(ball.getTranslateY(), rPaddleYPos, rPaddleYPos + paddleH )) ){
-                else if ( (ball.getTranslateX() > rPaddle.getX() - paddleW) && (UsefulMath.doubleInRange(ballYPos, rPaddleYPos, rPaddleYPos + paddleH )) ){
-                    ballDirX = -1;
+                else if ( (ball.getTranslateX() > rPaddle.getX() - Paddle.W) && (UsefulMath.doubleInRange(ballYPos, rPaddleYPos, rPaddleYPos + Paddle.H )) ){
+                    ball.dirX = -1;
                 }
 
-                if (ballDirX != ballDirXBefore || ballDirY != ballDirYBefore ){ ballSpeed += 0.9;}
+                if (ball.dirX != ballDirXBefore || ball.dirY != ballDirYBefore ){ ball.speed += 0.9;}
 
-//                System.out.println(ball.getTranslateX());
-//                System.out.println(lPaddle.getX());
                 // SCORING
                 boolean scoreAchieved = false;
                 if (ball.getTranslateX() < 0.0 ){
                     setScore(lScore,rScore+1,scoreLabel);
                     scoreAchieved = true;
                 }
-                else if (ball.getTranslateX() > viewportW ){
+                else if (ball.getTranslateX() > ViewportInfo.W ){
                     setScore(lScore+1,rScore,scoreLabel);
                     scoreAchieved = true;
                 }
                 if (scoreAchieved){
-                    ball.setTranslateX(viewportW/2);
-                    ball.setTranslateY(viewportH/2);
-                    ballSpeed = ballSpeedDefault;
+                    ball.reset();
                 }
 
-                ballColorInc += 1;
-                if (ballColorInc % 6 == 0){ ball.setFill( ball.getFill() == Color.WHITE ? Color.GREY : Color.WHITE ); }
-
+                ball.incColorTick();
             }) // End of KeyFrame block.
         ); // End of Timeline block
         everySecond.setCycleCount(Animation.INDEFINITE);
@@ -172,7 +121,7 @@ public class JavaFx extends Application{
         l.setText(lScore + "-" + rScore );
     }
 
-    public void inputCode(KeyEvent e, Rectangle lPaddle, Rectangle rPaddle){
+    public void inputCode(KeyEvent e, Paddle lPaddle, Paddle rPaddle){
         double moveIncY = 50.0;
         if (e.getCode() == KeyCode.W){
             moveShape(lPaddle, 0.0, -moveIncY);

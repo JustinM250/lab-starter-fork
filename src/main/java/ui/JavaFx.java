@@ -16,7 +16,7 @@ import javafx.scene.Group;
 
 import java.awt.*;
 
-public class JavaFx extends Application{
+public class JavaFx extends Application{ // Application is an abstract class.
     int lScore = 0;
     int rScore = 0;
 
@@ -110,6 +110,7 @@ public class JavaFx extends Application{
         r.show();
     }
 
+    // Good DRY example.
     public void moveShape(Shape p, double moveX, double moveY){
         p.setTranslateX(p.getTranslateX() + moveX);
         p.setTranslateY(p.getTranslateY() + moveY);

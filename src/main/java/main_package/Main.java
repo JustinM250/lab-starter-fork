@@ -7,7 +7,7 @@ public class Main {
     static void main() {
         // 12:46, Starting
         IO.println("Launching Pong+ !!!");
-        Application.launch(JavaFx.class);//JavaFx.class);
+        Application.launch(JavaFx.class); //JavaFx.class);
 
         /*
         The idea: Pong+

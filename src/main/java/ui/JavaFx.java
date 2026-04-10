@@ -108,6 +108,8 @@ public class JavaFx extends Application{ // Application is an abstract class.
 
         r.setScene(scene);
         r.show();
+
+        //
     }
 
     // Good DRY example.
